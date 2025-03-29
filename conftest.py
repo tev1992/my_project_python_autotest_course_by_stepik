@@ -19,10 +19,12 @@ def browser(request):
         options = Options()
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
         browser = webdriver.Chrome(options=options)
+        browser.maximize_window()
     elif browser_name == 'Firefox':
         options_firefox = OptionsFirefox()
         options_firefox.set_preference('intl.accept_languages', user_language)
         browser = webdriver.Firefox(options=options_firefox)
+        browser.maximize_window()
     # Проверка, если браузер не задан, по умолчанию открывается 'Chrome'
     else:
         raise pytest.UsageError("выбери браузер: 'Сhrome' или 'Firefox'")
