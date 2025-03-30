@@ -1,6 +1,3 @@
-# from conftest import browser
-from asyncio import timeout
-
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
