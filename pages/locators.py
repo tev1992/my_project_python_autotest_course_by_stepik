@@ -9,5 +9,6 @@ class LoginPagelocators():
 
 class ProductPageLocators():
     BOTTON_ADD_TO_BASKET = (By.CSS_SELECTOR, ".btn-add-to-basket")
+    MESSEGE_PRODUCT_ADDED = (By.XPATH, '''//div[contains(@class, "alertinner") and contains(., "The shellcoder's handbook")]''')
 
 
