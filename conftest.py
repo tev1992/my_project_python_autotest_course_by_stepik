@@ -7,7 +7,7 @@ def pytest_addoption(parser):
     parser.addoption('--language', action='store', default=None, help='Выбери локализацию тестов: "--language"')
     parser.addoption('--browser_name', action='store', default='Chrome', help='Выбери браузер: "--browser_name=chrome" or "--browser_name=firefox"')
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def browser(request):
     user_language = request.config.getoption('language')
     browser_name = request.config.getoption('browser_name')
