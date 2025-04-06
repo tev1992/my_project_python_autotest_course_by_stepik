@@ -1,4 +1,5 @@
 from operator import truediv
+from .locators import MainPageLocators, BasePageLocators
 from selenium.common import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
@@ -15,6 +16,13 @@ class BasePage():
 
     def open(self): # метод открытия страница
         self.browser.get(self.url)
+
+    def go_to_login_page(self):
+        login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)  # self чтобы иметь доступ к атрибутам и методам класса
+        login_link.click()
+
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), 'Ссылка на логин не отображается'  # *, указывает на то, что мы передали именно пару, и этот кортеж нужно распаковать.
 
     def is_element_present(self, how, what): #Элемент есть на странице
         try:
