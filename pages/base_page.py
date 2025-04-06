@@ -1,5 +1,5 @@
 from operator import truediv
-from .locators import MainPageLocators, BasePageLocators
+from .locators import MainPageLocators, BasePageLocators, BasketPageLocators
 from selenium.common import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
@@ -22,7 +22,16 @@ class BasePage():
         login_link.click()
 
     def should_be_login_link(self):
-        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), 'Ссылка на логин не отображается'  # *, указывает на то, что мы передали именно пару, и этот кортеж нужно распаковать.
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), \
+            'Ссылка на логин не отображается'  # *, указывает на то, что мы передали именно пару, и этот кортеж нужно распаковать.
+
+    def go_to_basket_page(self):
+        basket_link = self.browser.find_element(*BasketPageLocators.BUTTON_VIEW_BASKET)
+        basket_link.click()
+
+    def should_be_basket_button(self):
+        assert self.is_element_present(*BasketPageLocators.BUTTON_VIEW_BASKET), \
+            'Кнопка "Перейти в козину" не отображается'
 
     def is_element_present(self, how, what): #Элемент есть на странице
         try:
@@ -31,7 +40,8 @@ class BasePage():
             return False
         return True
 
-    def is_not_element_present(self, how, what, timeout=4): # метод, который проверяет, что элемент не появляется на странице в течении задан. времени
+    def is_not_element_present(self, how, what, timeout=4): # метод, который проверяет, \
+        # что элемент не появляется на странице в течении задан. времени
         try:
             WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
         except TimeoutException:
@@ -40,12 +50,11 @@ class BasePage():
 
     def is_disappeared(self, how, what, timeout=4): #служит для проверки, что элемент исчезает со страницы в течение заданного времени
         try:
-            WebDriverWait(self.browser, timeout, 1, TimeoutException).\
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
                 until_not(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return False
         return True
-
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert

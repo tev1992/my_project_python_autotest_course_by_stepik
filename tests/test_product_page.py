@@ -2,6 +2,8 @@ import time
 
 from urllib3 import request
 import pytest
+
+from pages.basket_page import BasketPage
 from pages.product_page import ProductPage
 from pages.login_page import LoginPage
 
@@ -64,4 +66,13 @@ def test_guest_can_go_to_login_page(browser):
     page.go_to_login_page() # выполняем метод страницы — переходим на страницу логина
     login_page = LoginPage(browser, browser.current_url) #инициализируем LoginPage, передаем экземпляр драйвера и текущий url
     login_page.should_be_login_page()
-    time.sleep(4)
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-city-and-the-stars_95/"
+    page = BasketPage(browser, link)
+    page.open() #открываем страницу
+    page.should_be_basket_button() # проверяем наличие кнопки "Перейти в корзину"
+    page.go_to_basket_page() # переходим в корзину
+    page.should_be_basket_is_empty() # проверяем сообщение, что корзина пуста
+    page.not_items_in_the_basket() # проверка отсутствия товара в корзине
+
