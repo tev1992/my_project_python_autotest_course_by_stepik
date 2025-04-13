@@ -48,7 +48,7 @@ class ProductPage(BasePage):
 
     def not_message_element_disappears_product_added_to_basket(self):
         assert self.is_disappeared(*ProductPageLocators.MESSAGE_PRODUCT_ADDED), \
-            'Cообщение отображается на странице после добавления'
+            'Cообщени не отображется на странице после добавления'
 
 
 
